@@ -523,6 +523,16 @@ namespace HeavenStudio
                 Debug.LogWarning("Game loader NtrOctopusMachineLoader failed!");
             }
 
+            game = PcoPenguisionistsLoader.AddGame(eventCaller);
+            if (game != null)
+            {
+                eventCaller.minigames.Add(game.name, game);
+            }
+            else
+            {
+                Debug.LogWarning("Game Loader PcoPenguisionistsLoader failed!");
+            }
+
             game = CtrPillowLoader.AddGame(eventCaller);
             if (game != null)
             {

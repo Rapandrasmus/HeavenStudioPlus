@@ -17,6 +17,7 @@ MonoBehaviour:
   DenseViewWidthThreshold: 512
   _disableAutoReloadInBackground: 0
   ImportedScriptPaths:
-  - Assets/Scripts/Minigames.cs
+  - Assets/Scripts/Games/Penguisionists/Penguisionists.cs
+  - Assets/Scripts/USG.g/LoadMinigames.Minigames.MinigameLoaderGenerator.g.cs
   PathsToSkipImportEvent: []
   PathsToIgnoreOverwriteSettingOnAttribute: []
