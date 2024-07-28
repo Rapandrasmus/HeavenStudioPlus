@@ -19,5 +19,6 @@ MonoBehaviour:
   ImportedScriptPaths:
   - Assets/Scripts/Games/Penguisionists/Penguisionists.cs
   - Assets/Scripts/USG.g/LoadMinigames.Minigames.MinigameLoaderGenerator.g.cs
+  - Assets/Scripts/Games/Penguisionists/Penguin.cs
   PathsToSkipImportEvent: []
   PathsToIgnoreOverwriteSettingOnAttribute: []

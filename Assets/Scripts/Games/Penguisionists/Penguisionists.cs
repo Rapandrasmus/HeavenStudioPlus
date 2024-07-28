@@ -42,39 +42,52 @@ namespace HeavenStudio.Games.Loaders
 
 namespace HeavenStudio.Games
 {
+    using HeavenStudio.Games.Scripts_MeatGrinder;
+    using Scripts_Penguisionists;
     public class Penguisionists : Minigame
     {
-        public enum Penguin
-        {
-            First,
-            Second,
-            Third,
-        }
+        #region Serialised Properties
+
+        [SerializeField] private Penguin _penguin1;
+        [SerializeField] private Penguin _penguin2;
+        [SerializeField] private Penguin _penguin3;
+
+        #endregion
 
         #region Jumps
 
-        public void Jump(double beat, double startBeat)
+        private void Jump(double beat, double startBeat)
         {
-            if (beat + 1 >= startBeat) _ = ScheduleInput(beat, 1, InputAction_BasicPress, Just1, Miss1, Empty);
-            if (beat + 2 >= startBeat) _ = ScheduleInput(beat, 2, InputAction_BasicPress, Just2, Miss2, Empty);
-            if (beat + 3 >= startBeat) _ = ScheduleInput(beat, 3, InputAction_BasicPress, Just3, Miss3, Empty);
+            PenguinsJump(beat, 1, 2, 3, startBeat);
         }
 
-        public void TogetherJump(double beat, double startBeat)
+        private void TogetherJump(double beat, double startBeat)
         {
-            if (beat + 2 >= startBeat) _ = ScheduleInput(beat, 2, InputAction_BasicPress, JustTogether, MissTogether, Empty);
+            PenguinsJump(beat, 2, 2, 2, startBeat, true);
         }
 
-        public void WhistleJump(double beat, double startBeat)
+        private void WhistleJump(double beat, double startBeat)
         {
-            if (beat + 1 >= startBeat) _ = ScheduleInput(beat, 1, InputAction_BasicPress, Just1, Miss1, Empty);
-            if (beat + 3 >= startBeat) _ = ScheduleInput(beat, 3, InputAction_BasicPress, Just2, Miss2, Empty);
-            if (beat + 4 >= startBeat) _ = ScheduleInput(beat, 4, InputAction_BasicPress, Just3, Miss3, Empty);
+            PenguinsJump(beat, 1, 3, 4, startBeat);
+        }
+
+        private void PenguinsJump(double baseBeat, double beat1, double beat2, double beat3, double startBeat, bool together = false)
+        {
+            _penguin1.QueueJump(baseBeat + beat1, startBeat, together);
+            _penguin2.QueueJump(baseBeat + beat2, startBeat, together);
+            _penguin3.QueueJump(baseBeat + beat3, startBeat, together);
         }
 
         #endregion
 
         #region Setup
+
+        public void Awake()
+        {
+            _penguin1.Init(this);
+            _penguin2.Init(this);
+            _penguin3.Init(this);
+        }
 
         public override void OnGameSwitch(double beat)
         {
@@ -110,71 +123,7 @@ namespace HeavenStudio.Games
 
         #endregion
 
-        #region Inputs
-
-        public void Just(PlayerActionEvent caller, float state, Penguin penguin)
-        {
-            if (state >= 1f || state <= -1f)
-            {
-                return;
-            }
-            SoundByte.PlayOneShotGame("penguisionists/penguinjump");
-        }
-
-        public void Just1(PlayerActionEvent caller, float state)
-        {
-            Just(caller, state, Penguin.First);
-        }
-
-        public void Just2(PlayerActionEvent caller, float state)
-        {
-            Just(caller, state, Penguin.Second);
-        }
-
-        public void Just3(PlayerActionEvent caller, float state)
-        {
-            Just(caller, state, Penguin.Third);
-        }
-
-        public void JustTogether(PlayerActionEvent caller, float state)
-        {
-            if (state >= 1f || state <= -1f)
-            {
-                return;
-            }
-            SoundByte.PlayOneShotGame("penguisionists/penguinsjump");
-        }
-
-        public void Miss(PlayerActionEvent caller, Penguin penguin)
-        {
-
-        }
-
-        public void Miss1(PlayerActionEvent caller)
-        {
-            Miss(caller, Penguin.First);
-        }
-
-        public void Miss2(PlayerActionEvent caller)
-        {
-            Miss(caller, Penguin.Second);
-        }
-
-        public void Miss3(PlayerActionEvent caller)
-        {
-            Miss(caller, Penguin.Third);
-        }
-
-        public void MissTogether(PlayerActionEvent caller)
-        {
-
-        }
-
-        public void Empty(PlayerActionEvent caller) { }
-
-        #endregion
-
-        #region Sounds
+        #region PreSounds
         public static void JumpSound(double beat)
         {
             _ = MultiSound.Play(new MultiSound.Sound[]
