@@ -9,6 +9,7 @@ namespace HeavenStudio.Games.Scripts_Penguisionists
     {
         [SerializeField] private bool _playTogether = false;
         [SerializeField][Range(-1, 1)] private float panning = 0;
+        [SerializeField][Range(0.1f, 5)] private float volume = 1;
         private Penguisionists _game;
         private Queue<Penguisionists.PenguinSound> _queuedSoundToPlay = new();
 
@@ -42,7 +43,7 @@ namespace HeavenStudio.Games.Scripts_Penguisionists
                 _ => throw new System.NotImplementedException(),
             };
 
-            SoundByte.PlayOneShotGame("penguisionists/" + soundString, pan: panning);
+            SoundByte.PlayOneShotGame("penguisionists/" + soundString, pan: panning, volume: volume);
         }
 
         public void JumpTogether(PlayerActionEvent caller, float state)

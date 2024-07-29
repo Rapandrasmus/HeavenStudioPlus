@@ -325,7 +325,7 @@ namespace HeavenStudio.Util
                 }
             }
 
-            if (looping || beat != -1 || pitch != 1f)
+            if (looping || beat != -1 || pitch != 1f || pan != 0)
             {
                 Sound snd = GetAvailableScheduledSound();
 
