@@ -11,6 +11,7 @@ namespace HeavenStudio.Util
         public float pitch = 1;
         public float bendedPitch = 1; //only used with rockers
         public float volume = 1;
+        public float pan = 0;
 
         // For use with PlayOneShotScheduled
         public bool scheduled;
@@ -82,6 +83,7 @@ namespace HeavenStudio.Util
             audioSource.pitch = pitch;
             audioSource.volume = volume;
             audioSource.loop = looping;
+            audioSource.panStereo = pan;
 
             loopEndBeat = -1;
             loopDone = false;

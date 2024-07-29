@@ -285,7 +285,7 @@ namespace HeavenStudio.Util
         ///    Unpitched, non-scheduled, non-looping sounds are played using a global One-Shot audio source that doesn't create a Sound object.
         ///    Looped sounds return their created Sound object so they can be canceled after creation.
         /// </summary>
-        public static Sound PlayOneShot(string name, double beat = -1, float pitch = 1f, float volume = 1f, bool looping = false, string game = null, double offset = 0f, bool ignoreConductorPause = false, bool ignoreSwing = false)
+        public static Sound PlayOneShot(string name, double beat = -1, float pitch = 1f, float volume = 1f, bool looping = false, string game = null, double offset = 0f, bool ignoreConductorPause = false, bool ignoreSwing = false, float pan = 0)
         {
             AudioClip clip = null;
             string soundName = name.Split('/')[^1];
@@ -334,6 +334,7 @@ namespace HeavenStudio.Util
                 snd.volume = volume;
                 snd.looping = looping;
                 snd.offset = offset;
+                snd.pan = pan;
                 snd.ignoreConductorPause = ignoreConductorPause;
                 if (ignoreSwing) snd.beat = Conductor.instance.GetSwungBeat(beat);
                 else snd.beat = beat;
@@ -359,7 +360,7 @@ namespace HeavenStudio.Util
         /// <summary>
         ///    Schedules a sound to be played at a specific time in seconds.
         /// </summary>
-        public static Sound PlayOneShotScheduled(string name, double targetTime, float pitch = 1f, float volume = 1f, bool looping = false, string game = null, bool ignoreConductorPause = false, bool ignoreSwing = false)
+        public static Sound PlayOneShotScheduled(string name, double targetTime, float pitch = 1f, float volume = 1f, bool looping = false, string game = null, bool ignoreConductorPause = false, bool ignoreSwing = false, float pan = 0)
         {
             Sound snd = GetAvailableScheduledSound();
             AudioClip clip = null;
@@ -406,6 +407,7 @@ namespace HeavenStudio.Util
             snd.pitch = pitch;
             snd.volume = volume;
             snd.looping = looping;
+            snd.pan = pan;
 
             snd.scheduled = true;
             if (ignoreSwing) snd.scheduledTime = Conductor.instance.GetSwungBeat(targetTime);
@@ -421,13 +423,13 @@ namespace HeavenStudio.Util
         ///    Unpitched, non-scheduled, non-looping sounds are played using a global One-Shot audio source that doesn't create a Sound object.
         ///    Looped sounds return their created Sound object so they can be canceled after creation.
         /// </summary>
-        public static Sound PlayOneShotGame(string name, double beat = -1, float pitch = 1f, float volume = 1f, bool looping = false, bool forcePlay = false, double offset = 0f, bool ignoreConductorPause = false, bool ignoreSwing = false)
+        public static Sound PlayOneShotGame(string name, double beat = -1, float pitch = 1f, float volume = 1f, bool looping = false, bool forcePlay = false, double offset = 0f, bool ignoreConductorPause = false, bool ignoreSwing = false, float pan = 0)
         {
             string gameName = name.Split('/')[0];
             var inf = GameManager.instance.GetGameInfo(gameName);
             if (GameManager.instance.currentGame == gameName || forcePlay)
             {
-                return PlayOneShot($"games/{name}", beat, pitch, volume, looping, inf.UsesAssetBundle ? gameName : null, offset, ignoreConductorPause, ignoreSwing);
+                return PlayOneShot($"games/{name}", beat, pitch, volume, looping, inf.UsesAssetBundle ? gameName : null, offset, ignoreConductorPause, ignoreSwing, pan);
             }
 
             return null;
@@ -437,13 +439,13 @@ namespace HeavenStudio.Util
         ///    Schedules a sound to be played at a specific time in seconds.
         ///    Audio clip is fetched from minigame resources
         /// </summary>
-        public static Sound PlayOneShotScheduledGame(string name, double targetTime, float pitch = 1f, float volume = 1f, bool looping = false, bool forcePlay = false, bool ignoreConductorPause = false, bool ignoreSwing = false)
+        public static Sound PlayOneShotScheduledGame(string name, double targetTime, float pitch = 1f, float volume = 1f, bool looping = false, bool forcePlay = false, bool ignoreConductorPause = false, bool ignoreSwing = false, float pan = 0)
         {
             string gameName = name.Split('/')[0];
             var inf = GameManager.instance.GetGameInfo(gameName);
             if (GameManager.instance.currentGame == gameName || forcePlay)
             {
-                return PlayOneShotScheduled($"games/{name}", targetTime, pitch, volume, looping, inf.UsesAssetBundle ? gameName : null, ignoreConductorPause, ignoreSwing);
+                return PlayOneShotScheduled($"games/{name}", targetTime, pitch, volume, looping, inf.UsesAssetBundle ? gameName : null, ignoreConductorPause, ignoreSwing, pan);
             }
 
             return null;

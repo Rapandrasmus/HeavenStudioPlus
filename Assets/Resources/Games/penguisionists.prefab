@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playTogether: 0
+  panning: 0
 --- !u!1 &5888550228473696721
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playTogether: 0
+  panning: -0.2
 --- !u!1 &7453468213615280732
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,3 +188,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playTogether: 1
+  panning: 0.2

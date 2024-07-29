@@ -23,6 +23,11 @@ namespace HeavenStudio.Games.Loaders
                 {
                     preFunction = delegate { Penguisionists.JumpSound(eventCaller.currentEntity.beat); },
                     defaultLength = 4,
+                    parameters = new()
+                    {
+                        new("r1", Penguisionists.PenguinSound.Two, "Sound Range Start"),
+                        new("r2", Penguisionists.PenguinSound.Two, "Sound Range End")
+                    }
                 },
                 new("togetherJump", "Together Jump")
                 {
@@ -33,6 +38,11 @@ namespace HeavenStudio.Games.Loaders
                 {
                     preFunction = delegate { Penguisionists.WhistleJumpSound(eventCaller.currentEntity.beat); },
                     defaultLength = 5,
+                    parameters = new()
+                    {
+                        new("r1", Penguisionists.PenguinSound.Two, "Sound Range Start"),
+                        new("r2", Penguisionists.PenguinSound.Two, "Sound Range End")
+                    }
                 }
             }
             );
@@ -42,10 +52,16 @@ namespace HeavenStudio.Games.Loaders
 
 namespace HeavenStudio.Games
 {
-    using HeavenStudio.Games.Scripts_MeatGrinder;
     using Scripts_Penguisionists;
     public class Penguisionists : Minigame
     {
+        public enum PenguinSound
+        {
+            One,
+            Two,
+            Three
+        }
+
         #region Serialised Properties
 
         [SerializeField] private Penguin _penguin1;
@@ -56,26 +72,31 @@ namespace HeavenStudio.Games
 
         #region Jumps
 
-        private void Jump(double beat, double startBeat)
+        private void Jump(double beat, double startBeat, PenguinSound soundStart, PenguinSound soundEnd)
         {
-            PenguinsJump(beat, 1, 2, 3, startBeat);
+            PenguinsJump(beat, 1, 2, 3, startBeat, soundStart, soundEnd);
         }
 
         private void TogetherJump(double beat, double startBeat)
         {
-            PenguinsJump(beat, 2, 2, 2, startBeat, true);
+            PenguinsJump(beat, 2, 2, 2, startBeat, PenguinSound.Two, PenguinSound.Two, true);
         }
 
-        private void WhistleJump(double beat, double startBeat)
+        private void WhistleJump(double beat, double startBeat, PenguinSound soundStart, PenguinSound soundEnd)
         {
-            PenguinsJump(beat, 1, 3, 4, startBeat);
+            PenguinsJump(beat, 1, 3, 4, startBeat, soundStart, soundEnd);
         }
 
-        private void PenguinsJump(double baseBeat, double beat1, double beat2, double beat3, double startBeat, bool together = false)
+        private void PenguinsJump(double baseBeat, double beat1, double beat2, double beat3, double startBeat, PenguinSound soundStart, PenguinSound soundEnd, bool together = false)
         {
-            _penguin1.QueueJump(baseBeat + beat1, startBeat, together);
-            _penguin2.QueueJump(baseBeat + beat2, startBeat, together);
-            _penguin3.QueueJump(baseBeat + beat3, startBeat, together);
+            _penguin1.QueueJump(baseBeat + beat1, startBeat, RandomSound(), together);
+            _penguin2.QueueJump(baseBeat + beat2, startBeat, RandomSound(), together);
+            _penguin3.QueueJump(baseBeat + beat3, startBeat, RandomSound(), together);
+
+            PenguinSound RandomSound()
+            {
+                return (PenguinSound)UnityEngine.Random.Range((int)soundStart, (int)soundEnd + 1);
+            }
         }
 
         #endregion
@@ -108,13 +129,13 @@ namespace HeavenStudio.Games
                 switch (jump.datamodel)
                 {
                     case "penguisionists/jump":
-                        Jump(jump.beat, beat);
+                        Jump(jump.beat, beat, (PenguinSound)jump["r1"], (PenguinSound)jump["r2"]);
                         break;
                     case "penguisionists/togetherJump":
                         TogetherJump(jump.beat, beat);
                         break;
                     case "penguisionists/whistleJump":
-                        WhistleJump(jump.beat, beat);
+                        WhistleJump(jump.beat, beat, (PenguinSound)jump["r1"], (PenguinSound)jump["r2"]);
                         break;
                     default: break;
                 }
