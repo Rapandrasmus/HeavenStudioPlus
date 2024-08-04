@@ -10,12 +10,20 @@ namespace HeavenStudio.Games.Scripts_Penguisionists
         [SerializeField] private bool _playTogether = false;
         [SerializeField][Range(-1, 1)] private float panning = 0;
         [SerializeField][Range(0.1f, 5)] private float volume = 1;
+
+        [SerializeField] private Animator _anim;
+
         private Penguisionists _game;
         private Queue<Penguisionists.PenguinSound> _queuedSoundToPlay = new();
 
         public void Init(Penguisionists game)
         {
             _game = game;
+        }
+
+        public void Walk(bool right)
+        {
+            _anim.DoScaledAnimationAsync(right ? "Right" : "Left", 0.75f);
         }
 
         public void QueueJump(double beat, double startBeat, Penguisionists.PenguinSound sound, bool together = false)

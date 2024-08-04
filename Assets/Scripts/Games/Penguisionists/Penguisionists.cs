@@ -79,6 +79,10 @@ namespace HeavenStudio.Games
         public override void OnBeatPulse(double beat)
         {
             _ground.MoveGroundInterpolate(beat, beat + 0.5, 1, _groundEase);
+
+            _penguin1.Walk(beat % 2 == 0);
+            _penguin2.Walk(beat % 2 == 0);
+            _penguin3.Walk(beat % 2 == 0);
         }
 
         #endregion
