@@ -68,9 +68,22 @@ namespace HeavenStudio.Games
         [SerializeField] private Penguin _penguin2;
         [SerializeField] private Penguin _penguin3;
 
+        [SerializeField] private PGGround _ground;
+
+        [SerializeField] private Util.EasingFunction.Ease _groundEase = Util.EasingFunction.Ease.EaseOutQuad;
+
         #endregion
 
-        #region Jumps
+        #region Pulse
+
+        public override void OnBeatPulse(double beat)
+        {
+            _ground.MoveGroundInterpolate(beat, beat + 0.5, 1, _groundEase);
+        }
+
+        #endregion
+
+        #region Cues
 
         private void Jump(double beat, double startBeat, PenguinSound soundStart, PenguinSound soundEnd)
         {

@@ -22,5 +22,6 @@ MonoBehaviour:
   - Assets/Scripts/Games/Penguisionists/Penguin.cs
   - Assets/Scripts/Util/SoundByte.cs
   - Assets/Scripts/Util/Sound.cs
+  - Assets/Scripts/Games/Penguisionists/PGGround.cs
   PathsToSkipImportEvent: []
   PathsToIgnoreOverwriteSettingOnAttribute: []
