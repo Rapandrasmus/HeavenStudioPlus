@@ -80,7 +80,7 @@ namespace HeavenStudio.Games
         {
             _ = BeatAction.New(this, new()
             {
-                new(beat + 0.125, delegate { _ground.MoveGroundInterpolate(beat + 0.125, beat + 0.625, 1, _groundEase); })
+                new(beat + 0.4, delegate { _ground.MoveGroundInterpolate(beat + 0.4, beat + 0.9, 1, _groundEase); })
             });
 
             _penguin1.Walk(beat % 2 == 0);
