@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundSpeedConstant: 1
-  _groundDistanceInterpolate: 1.3
+  _groundDistanceInterpolate: 0.91
   _groundAmountExtra: 6
   _firstGrounds:
   - {fileID: 2395611409779273716}
