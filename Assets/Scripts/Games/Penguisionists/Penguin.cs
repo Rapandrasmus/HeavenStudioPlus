@@ -19,6 +19,7 @@ namespace HeavenStudio.Games.Scripts_Penguisionists
         public void Init(Penguisionists game)
         {
             _game = game;
+            _anim.Play("WalkConstantStart", 0, 0);
         }
 
         public void Walk(bool right)

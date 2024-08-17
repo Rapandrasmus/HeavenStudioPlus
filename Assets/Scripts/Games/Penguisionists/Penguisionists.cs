@@ -74,18 +74,14 @@ namespace HeavenStudio.Games
 
         #endregion
 
-        #region Pulse
+        #region Update
 
-        public override void OnBeatPulse(double beat)
+        public void Update()
         {
-            _ = BeatAction.New(this, new()
+            if (conductor.isPlaying && !conductor.isPaused)
             {
-                new(beat + 0.4, delegate { _ground.MoveGroundInterpolate(beat + 0.4, beat + 0.9, 1, _groundEase); })
-            });
-
-            _penguin1.Walk(beat % 2 == 0);
-            _penguin2.Walk(beat % 2 == 0);
-            _penguin3.Walk(beat % 2 == 0);
+                _ground.MoveGroundConstant();
+            }
         }
 
         #endregion

@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1ff0caa5962dc42b3e3e5957901281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundSpeedConstant: 1
+  _groundSpeedConstant: 1.21
   _groundDistanceInterpolate: 0.91
   _groundAmountExtra: 6
   _firstGrounds:
